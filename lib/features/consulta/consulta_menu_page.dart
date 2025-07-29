@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_app/screens/home_page.dart';
-import 'package:flutter_app/features/skin_cancer.dart';
+import 'package:flutter_app/features/home/home_page.dart';
+import 'package:flutter_app/features/skin_cancer/skin_cancer_main.dart';
 
 class ConsultaMenuPage extends StatelessWidget {
   const ConsultaMenuPage({super.key});

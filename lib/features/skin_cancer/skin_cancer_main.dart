@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_app/tflite/tflite_helper.dart';
-import 'package:flutter_app/labels/skin_cancer_labels.dart'; // ajuste o caminho conforme seu projeto
-import 'package:flutter_app/screens/chat/chat_page.dart'; // import necessário para navegar
+import 'package:flutter_app/services/tflite/tflite_helper.dart';
+import 'package:flutter_app/features/skin_cancer/skin_cancer_labels.dart'; // ajuste o caminho conforme seu projeto
+import 'package:flutter_app/features/chat/chat_page.dart'; // import necessário para navegar
 
 class SkinCancer extends StatefulWidget {
   const SkinCancer({super.key});
@@ -27,7 +27,9 @@ class _SkinCancerState extends State<SkinCancer> {
 
   Future<void> _loadModel() async {
     try {
-      await TFLiteHelper.init('assets/models/skin_cancer_model.tflite');
+      await TFLiteHelper.init(
+        'assets/skin_cancer/models/skin_cancer_model.tflite',
+      );
       setState(() {
         _status = "Modelo carregado com sucesso!";
       });

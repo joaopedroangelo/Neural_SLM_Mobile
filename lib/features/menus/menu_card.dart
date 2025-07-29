@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/menus/menu_item.dart';
+import 'package:flutter_app/features/menus/menu_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MenuCard extends StatefulWidget {

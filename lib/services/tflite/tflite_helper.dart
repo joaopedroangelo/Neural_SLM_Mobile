@@ -58,7 +58,7 @@ class TFLiteHelper {
     _interpreter.run(input, output);
 
     final labelsTxt = await rootBundle.loadString(
-      'assets/labels/skin_cancer_labels.txt',
+      'assets/skin_cancer/labels/skin_cancer_labels.txt',
     );
     final labelList = labelsTxt
         .split('\n')

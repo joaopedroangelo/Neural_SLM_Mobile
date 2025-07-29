@@ -43,6 +43,8 @@ dependencies:
   tflite_flutter: ^0.11.0
   image: ^4.3.0
   flutter_markdown: ^0.7.7
+  flutter_neumorphic_plus: ^3.5.0
+
 
 dev_dependencies:
   flutter_test:
@@ -61,11 +63,11 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/loading.png
-    - assets/heart_dementia_doctor.json
-    - assets/live_chatbot.json
-    - assets/labels/skin_cancer_labels.txt
-    - assets/models/skin_cancer_model.tflite
+    - assets/common/loading.png
+    - assets/common/heart_dementia_doctor.json
+    - assets/chat/live_chatbot.json
+    - assets/skin_cancer/labels/skin_cancer_labels.txt
+    - assets/skin_cancer/models/skin_cancer_model.tflite
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../home_page.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../../features/home/home_page.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -25,17 +26,13 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
+    // Usa um loading animado da biblioteca
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 146, 201, 218),
       body: Center(
-        child: Image.asset(
-          'assets/loading.png',
-          width: screenWidth,
-          height: screenHeight * 120,
-          fit: BoxFit.contain,
+        child: LoadingAnimationWidget.inkDrop(
+          color: Colors.white,
+          size: MediaQuery.of(context).size.width * 0.2,
         ),
       ),
     );
