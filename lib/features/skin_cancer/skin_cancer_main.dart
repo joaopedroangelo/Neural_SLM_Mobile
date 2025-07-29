@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_app/services/tflite/tflite_helper.dart';
-import 'package:flutter_app/features/skin_cancer/skin_cancer_labels.dart'; // ajuste o caminho conforme seu projeto
-import 'package:flutter_app/features/chat/chat_page.dart'; // import necessário para navegar
+import 'package:flutter_app/features/skin_cancer/skin_cancer_labels.dart';
+import 'package:flutter_app/features/chat/chat_page.dart';
 
 class SkinCancer extends StatefulWidget {
   const SkinCancer({super.key});
@@ -14,7 +14,6 @@ class SkinCancer extends StatefulWidget {
 }
 
 class _SkinCancerState extends State<SkinCancer> {
-  String _status = "Carregando modelo...";
   File? _image;
   String _result = '';
   bool _isLoading = false;
@@ -26,18 +25,9 @@ class _SkinCancerState extends State<SkinCancer> {
   }
 
   Future<void> _loadModel() async {
-    try {
-      await TFLiteHelper.init(
-        'assets/skin_cancer/models/skin_cancer_model.tflite',
-      );
-      setState(() {
-        _status = "Modelo carregado com sucesso!";
-      });
-    } catch (e) {
-      setState(() {
-        _status = "Erro ao carregar modelo: $e";
-      });
-    }
+    await TFLiteHelper.init(
+      'assets/skin_cancer/models/skin_cancer_model.tflite',
+    );
   }
 
   Future<void> _pickImage() async {
@@ -53,7 +43,7 @@ class _SkinCancerState extends State<SkinCancer> {
     });
 
     try {
-      final labelCode = await _classifyImage(_image!); // Ex: 'mel'
+      final labelCode = await TFLiteHelper.classifyImage(_image!);
       final mappedResult = SkinCancerLabels.mapLabel(labelCode);
       setState(() {
         _result = mappedResult;
@@ -67,66 +57,174 @@ class _SkinCancerState extends State<SkinCancer> {
     }
   }
 
-  Future<String> _classifyImage(File image) async {
-    try {
-      return await TFLiteHelper.classifyImage(image);
-    } catch (e) {
-      throw Exception("Classificação falhou: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Análise de Lesão de Pele'),
-        backgroundColor: const Color(0xFF50A3C4),
-      ),
-      body: Column(
-        children: [
-          Padding(padding: const EdgeInsets.all(8.0), child: Text(_status)),
-          Expanded(
-            child: Center(
-              child: _image != null
-                  ? Image.file(_image!, fit: BoxFit.cover)
-                  : const Text('Nenhuma imagem selecionada'),
-            ),
+    const bg = Color(0xFFF5F5F5);
+    const primary = Color(0xFF4DB6AC);
+    const textDark = Color(0xFF333333);
+
+    return NeumorphicBackground(
+      child: NeumorphicTheme(
+        theme: NeumorphicThemeData(
+          baseColor: bg,
+          lightSource: LightSource.topLeft,
+          depth: 6,
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: const Text('Análise de Lesão de Pele'),
+            backgroundColor: primary,
+            elevation: 0,
           ),
-          if (_isLoading) const LinearProgressIndicator(),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Markdown(
-                data: _result,
-                // Opcional: customize o estilo aqui
-              ),
-            ),
-          ),
-          if (_result.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ChatPage()),
-                  );
-                },
-                icon: const Icon(Icons.chat),
-                label: const Text('Conversar com o Médico R'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF50A3C4),
-                  minimumSize: const Size.fromHeight(48),
+          body: Column(
+            children: [
+              // Quando há imagem, mostramos a imagem no topo
+              if (_image != null)
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Neumorphic(
+                      style: NeumorphicStyle(
+                        color: bg,
+                        depth: -4,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.file(_image!, fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
+                )
+              else
+                // Caso não tenha imagem, centraliza o botão na tela
+                Expanded(
+                  child: Center(
+                    child: NeumorphicButton(
+                      onPressed: _pickImage,
+                      style: NeumorphicStyle(
+                        color: bg,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(12),
+                        ),
+                        depth: 4,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 14,
+                      ),
+                      child: const Text(
+                        'Escolher Imagem',
+                        style: TextStyle(
+                          color: textDark,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: _pickImage,
-            child: const Text('Escolher Imagem'),
+
+              if (_isLoading)
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: LinearProgressIndicator(),
+                ),
+
+              if (_result.isNotEmpty)
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Neumorphic(
+                      style: NeumorphicStyle(
+                        color: bg,
+                        depth: -4,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(12),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      child: Markdown(data: _result),
+                    ),
+                  ),
+                ),
+
+              if (_result.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: NeumorphicButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ChatPage()),
+                      );
+                    },
+                    style: NeumorphicStyle(
+                      color: primary,
+                      boxShape: NeumorphicBoxShape.roundRect(
+                        BorderRadius.circular(12),
+                      ),
+                      depth: 4,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 14,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.chat, color: Colors.white),
+                        SizedBox(width: 8),
+                        Text(
+                          'Conversar com o Médico R',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              if (_image != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: NeumorphicButton(
+                    onPressed: _pickImage,
+                    style: NeumorphicStyle(
+                      color: bg,
+                      boxShape: NeumorphicBoxShape.roundRect(
+                        BorderRadius.circular(12),
+                      ),
+                      depth: 4,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 14,
+                    ),
+                    child: const Text(
+                      'Escolher outra Imagem',
+                      style: TextStyle(
+                        color: textDark,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
-          const SizedBox(height: 20),
-        ],
+        ),
       ),
     );
   }

@@ -1,7 +1,5 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatPage extends StatefulWidget {
@@ -49,21 +47,20 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildMessageWidget(Message message) {
-    final alignment = message.isUser
-        ? Alignment.centerRight
-        : Alignment.centerLeft;
-    final bgColor = message.isUser ? const Color(0xFF50A3C4) : Colors.grey[200];
-    final textColor = message.isUser ? Colors.white : Colors.black87;
-    final borderRadius = message.isUser
+    final isUser = message.isUser;
+    final alignment = isUser ? Alignment.centerRight : Alignment.centerLeft;
+    final bgColor = isUser ? const Color(0xFF4DB6AC) : const Color(0xFFE0E0E0);
+    final textColor = isUser ? Colors.white : Colors.black87;
+    final borderRadius = isUser
         ? const BorderRadius.only(
             topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
             bottomLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
           )
         : const BorderRadius.only(
-            topLeft: Radius.circular(16),
             topRight: Radius.circular(16),
             bottomRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
           );
 
     Widget content;
@@ -80,96 +77,124 @@ class _ChatPageState extends State<ChatPage> {
     } else {
       content = Text(
         message.text ?? '',
-        style: GoogleFonts.poppins(color: textColor, fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          color: textColor,
+          fontWeight: FontWeight.w500,
+        ),
       );
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      child: Align(
-        alignment: alignment,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 150),
-          padding: message.imageFile == null
-              ? const EdgeInsets.all(12)
-              : EdgeInsets.zero,
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.7,
-          ),
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: borderRadius,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 6,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: content,
+    return Align(
+      alignment: alignment,
+      child: Neumorphic(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        padding: message.imageFile == null
+            ? const EdgeInsets.symmetric(horizontal: 14, vertical: 12)
+            : EdgeInsets.zero,
+        style: NeumorphicStyle(
+          color: bgColor,
+          depth: 4,
+          boxShape: NeumorphicBoxShape.roundRect(borderRadius),
         ),
+        child: content,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF1F9FB),
-      appBar: AppBar(
-        title: const Text('Assistente Médico'),
-        backgroundColor: const Color(0xFF50A3C4),
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) =>
-                  _buildMessageWidget(_messages[index]),
-            ),
-          ),
-          const Divider(height: 1),
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Row(
+    const Color backgroundSoftGray = Color(0xFFF5F5F5);
+    const Color aquaGreen = Color(0xFF4DB6AC);
+
+    return NeumorphicBackground(
+      child: NeumorphicTheme(
+        theme: NeumorphicThemeData(
+          baseColor: backgroundSoftGray,
+          lightSource: LightSource.topLeft,
+          depth: 6,
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.image),
-                  color: const Color(0xFF50A3C4),
-                  onPressed: _sendImage,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF0F0F0),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Digite sua mensagem...',
-                      ),
-                      onSubmitted: (_) => _sendMessage(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    'Assistente Médico',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF333333),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  color: const Color(0xFF50A3C4),
-                  onPressed: _sendMessage,
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) =>
+                        _buildMessageWidget(_messages[index]),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Neumorphic(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 12,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  style: NeumorphicStyle(
+                    depth: -5,
+                    boxShape: NeumorphicBoxShape.stadium(),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      NeumorphicButton(
+                        onPressed: _sendImage,
+                        style: NeumorphicStyle(
+                          shape: NeumorphicShape.flat,
+                          boxShape: const NeumorphicBoxShape.circle(),
+                          color: backgroundSoftGray,
+                          depth: 4,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: const Icon(Icons.image, color: aquaGreen),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          onSubmitted: (_) => _sendMessage(),
+                          decoration: const InputDecoration.collapsed(
+                            hintText: 'Digite sua mensagem...',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      NeumorphicButton(
+                        onPressed: _sendMessage,
+                        style: NeumorphicStyle(
+                          shape: NeumorphicShape.flat,
+                          boxShape: const NeumorphicBoxShape.circle(),
+                          color: backgroundSoftGray,
+                          depth: 4,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: const Icon(Icons.send, color: aquaGreen),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

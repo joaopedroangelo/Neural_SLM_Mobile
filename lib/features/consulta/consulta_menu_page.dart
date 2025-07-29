@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:flutter_app/features/home/home_page.dart';
 import 'package:flutter_app/features/skin_cancer/skin_cancer_main.dart';
 
@@ -38,44 +37,91 @@ class ConsultaMenuPage extends StatelessWidget {
       }),
     ];
 
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFE0F7FA), Color(0xFFB2EBF2)],
-          ),
+    const Color aquaGreenConsistent = Color(0xFF4DB6AC);
+    const Color backgroundSoftGray = Color(0xFFF5F5F5);
+    const Color textDarkGray = Color(0xFF333333);
+
+    return NeumorphicBackground(
+      child: NeumorphicTheme(
+        theme: NeumorphicThemeData(
+          baseColor: backgroundSoftGray,
+          lightSource: LightSource.topLeft,
+          depth: 10,
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              AppBar(
-                title: const Text('Iniciar Consulta'),
-                backgroundColor: const Color(0xFF50A3C4),
-                elevation: 0,
-              ),
-              const SizedBox(height: 32),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: GridView.builder(
-                    itemCount: items.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 24,
-                          crossAxisSpacing: 24,
-                          childAspectRatio: 1.1,
-                        ),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return _ConsultaMenuCard(item: item);
-                    },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    'Iniciar Consulta',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: textDarkGray,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: GridView.builder(
+                      itemCount: items.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 24,
+                            crossAxisSpacing: 24,
+                            childAspectRatio: 1.3,
+                          ),
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        return NeumorphicButton(
+                          onPressed: () {
+                            Future.delayed(
+                              const Duration(milliseconds: 120),
+                              () {
+                                item.onTap();
+                              },
+                            );
+                          },
+                          style: NeumorphicStyle(
+                            depth: 8,
+                            intensity: 1,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(14),
+                            ),
+                            color: backgroundSoftGray,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                item.icon,
+                                size: 34,
+                                color: aquaGreenConsistent,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                item.label,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16.4,
+                                  fontWeight: FontWeight.w600,
+                                  color: textDarkGray,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -89,66 +135,4 @@ class _ConsultaMenuItem {
   final VoidCallback onTap;
 
   _ConsultaMenuItem(this.label, this.icon, this.onTap);
-}
-
-class _ConsultaMenuCard extends StatefulWidget {
-  const _ConsultaMenuCard({required this.item});
-  final _ConsultaMenuItem item;
-
-  @override
-  State<_ConsultaMenuCard> createState() => _ConsultaMenuCardState();
-}
-
-class _ConsultaMenuCardState extends State<_ConsultaMenuCard> {
-  bool _pressed = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        decoration: BoxDecoration(
-          color: _pressed ? Colors.grey[200] : Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () {
-              setState(() => _pressed = true);
-              Future.delayed(const Duration(milliseconds: 120), () {
-                setState(() => _pressed = false);
-                widget.item.onTap();
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    widget.item.icon,
-                    size: 36,
-                    color: const Color(0xFF4DB6AC),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.item.label,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }
