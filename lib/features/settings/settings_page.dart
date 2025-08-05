@@ -1,6 +1,9 @@
-// File: lib/screens/settings/settings_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_app/testes/default_model_screen.dart';
+import 'package:flutter_app/testes/model_selection_screen.dart';
+import 'package:flutter_app/testes/avaliable_models.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -10,16 +13,38 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  Model? _defaultModel;
+
   @override
   void initState() {
     super.initState();
-    // TODO: carregar estado inicial de tema e notificações
+    _loadDefaultModel();
+  }
+
+  Future<void> _loadDefaultModel() async {
+    final prefs = await SharedPreferences.getInstance();
+    final modelName = prefs.getString('default_model');
+    setState(() {
+      _defaultModel = Model.values.firstWhere(
+        (m) => m.name == modelName,
+        orElse: () => Model.llama3_2_1bInstruct, // fallback padrão
+      );
+    });
+  }
+
+  Future<void> _selectNewDefaultModel() async {
+    final selected = await Navigator.push<Model>(
+      context,
+      MaterialPageRoute(builder: (_) => const DefaultModelSelectorScreen()),
+    );
+    if (selected != null) {
+      setState(() => _defaultModel = selected);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // gradiente suave de fundo
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -31,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: SafeArea(
           child: Column(
             children: [
-              // AppBar customizado
+              // AppBar customizada
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -55,10 +80,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 8),
 
-              // Lista de opções
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.symmetric(
@@ -70,7 +93,22 @@ class _SettingsPageState extends State<SettingsPage> {
                       icon: Icons.memory,
                       iconColor: const Color(0xFF4DB6AC),
                       label: 'Gerenciar Modelos LLM',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ModelSelectionScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    _buildCard(
+                      icon: Icons.star_rate,
+                      iconColor: const Color(0xFF7E57C2),
+                      label:
+                          'Modelo Padrão: ${_defaultModel?.displayName ?? "Llama 1B"}',
+                      onTap: _selectNewDefaultModel,
                     ),
                   ],
                 ),
@@ -100,8 +138,9 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               Icon(icon, size: 28, color: iconColor),
               const SizedBox(width: 12),
-              Text(label, style: GoogleFonts.poppins(fontSize: 16)),
-              const Spacer(),
+              Expanded(
+                child: Text(label, style: GoogleFonts.poppins(fontSize: 16)),
+              ),
               const Icon(Icons.chevron_right, color: Colors.black38),
             ],
           ),

@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'package:flutter_app/testes/avaliable_models.dart';
+import 'package:flutter_app/testes/chat/chat_screen.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_app/services/tflite/tflite_helper.dart';
 import 'package:flutter_app/features/skin_cancer/skin_cancer_labels.dart';
-import 'package:flutter_app/features/chat/chat_page.dart';
 
 class SkinCancer extends StatefulWidget {
   const SkinCancer({super.key});
@@ -163,7 +164,10 @@ class _SkinCancerState extends State<SkinCancer> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ChatPage()),
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              ChatScreen(model: Model.llama3_2_1bInstruct),
+                        ),
                       );
                     },
                     style: NeumorphicStyle(
