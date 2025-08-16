@@ -5,7 +5,13 @@
 > SLM: Small Language Model
 
 ---
+## 🖼️ Imagens
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-4.png)
+![alt text](image-3.png)
 
+---
 ## 🚀 Objetivos
 
 - Demonstrar a viabilidade de rodar **modelos de IA em smartphones comuns**.  
@@ -14,7 +20,6 @@
 - Servir como base para futuros experimentos em **assistentes móveis inteligentes**.  
 
 ---
-
 ## 🏗️ Estrutura do Projeto
 
 ```
@@ -40,7 +45,6 @@ flutter_app/
 - **Arquitetura modular** em Flutter (core, features, services)  
 
 ---
-
 ## 📱 Como Executar
 
 1. Clone este repositório:
@@ -60,7 +64,6 @@ flutter_app/
    flutter run
    ```
 ---
-
 ## ⚡ Desafios
 
 - Quantização e otimização para rodar em CPU.  
