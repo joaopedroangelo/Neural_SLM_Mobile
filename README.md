@@ -53,7 +53,7 @@ flutter_app/
    ```
 2. Acesse a pasta do projeto:
    ```bash
-   cd flutter_app
+   cd <path para o projeto>
    ```
 3. Instale as dependências do Flutter:
    ```bash
