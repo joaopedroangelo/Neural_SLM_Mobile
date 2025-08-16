@@ -3,11 +3,11 @@ import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_app/testes/avaliable_models.dart';
-import 'package:flutter_app/testes/chat/chat_screen.dart';
-import 'package:flutter_app/features/settings/settings_page.dart';
-import 'package:flutter_app/features/consulta/consulta_menu_page.dart';
-import 'package:flutter_app/features/menus/menu_item.dart';
+import '../../testes/avaliable_models.dart';
+import '../../testes/chat/chat_screen.dart';
+import '../settings/settings_page.dart';
+import '../consulta/consulta_menu_page.dart';
+import '../menus/menu_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});

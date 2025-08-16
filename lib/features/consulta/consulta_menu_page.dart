@@ -1,6 +1,6 @@
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:flutter_app/features/home/home_page.dart';
-import 'package:flutter_app/features/skin_cancer/skin_cancer_main.dart';
+import '../home/home_page.dart';
+import '../skin_cancer/skin_cancer_main.dart';
 
 class ConsultaMenuPage extends StatelessWidget {
   const ConsultaMenuPage({super.key});

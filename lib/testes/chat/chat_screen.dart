@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemma/core/chat.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
-import 'package:flutter_app/testes/chat/chat_widget.dart';
-import 'package:flutter_app/testes/avaliable_models.dart';
+import 'chat_widget.dart';
+import '../avaliable_models.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_app/testes/model_selection_screen.dart';
+import '../model_selection_screen.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 
 class ChatScreen extends StatefulWidget {

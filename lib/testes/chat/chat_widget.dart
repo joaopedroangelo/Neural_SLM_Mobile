@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter_gemma/core/chat.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
-import 'package:flutter_app/testes/chat/chat_input_field.dart';
-import 'package:flutter_app/testes/chat/chat_message.dart';
-import 'package:flutter_app/testes/chat/gemma_input_field.dart';
+import 'chat_input_field.dart';
+import 'chat_message.dart';
+import 'gemma_input_field.dart';
 
 class ChatListWidget extends StatelessWidget {
   const ChatListWidget({

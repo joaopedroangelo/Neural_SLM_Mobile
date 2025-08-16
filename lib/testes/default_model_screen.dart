@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/testes/avaliable_models.dart';
-import 'package:flutter_app/testes/model_download.dart';
+import 'avaliable_models.dart';
+import 'model_download.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DefaultModelSelectorScreen extends StatefulWidget {

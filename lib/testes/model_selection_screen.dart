@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/features/home/home_page.dart';
+import '../features/home/home_page.dart';
 import 'package:flutter_gemma/pigeon.g.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
-import 'package:flutter_app/testes/chat/chat_screen.dart';
-import 'package:flutter_app/testes/model_download_screen.dart';
-import 'package:flutter_app/testes/avaliable_models.dart';
+import 'chat/chat_screen.dart';
+import 'model_download_screen.dart';
+import 'avaliable_models.dart';
 
 class ModelSelectionScreen extends StatelessWidget {
   const ModelSelectionScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/testes/default_model_screen.dart';
-import 'package:flutter_app/testes/model_selection_screen.dart';
-import 'package:flutter_app/testes/avaliable_models.dart';
+import '../../testes/default_model_screen.dart';
+import '../../testes/model_selection_screen.dart';
+import '../../testes/avaliable_models.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
