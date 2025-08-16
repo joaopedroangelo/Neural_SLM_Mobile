@@ -69,7 +69,8 @@ flutter_app/
 - Quantização e otimização para rodar em CPU.  
 - Gerenciamento de memória em dispositivos móveis.  
 - Garantir **tempo de resposta aceitável** sem GPU.  
-- Manter execução totalmente **offline**.  
+- Manter execução totalmente **offline**.
+- O **pubspec.lock** foi commitado para "lockar" as versões das dependências, evitando problemas com atualizações.
 
 ---
 ## 📜 Licença
