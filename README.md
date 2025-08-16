@@ -1,16 +1,78 @@
-# flutter_app
+# 📱 Neural+SLM Mobile
 
-A new Flutter project.
+**Neural+SLM Mobile** é uma prova de conceito que integra uma **Rede Neural** (via TensorFlow Lite) com um **Modelo de Linguagem (SLM)** dentro de um aplicativo Android construído em **Flutter**, funcionando **totalmente offline** em dispositivos **sem GPU**.
 
-## Getting Started
+> SLM: Small Language Model
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Objetivos
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Demonstrar a viabilidade de rodar **modelos de IA em smartphones comuns**.  
+- Integrar um modelo de **rede neural em TFLite** com um **SLM otimizado** para execução local.  
+- Garantir **funcionamento 100% offline**, sem depender de servidores externos.  
+- Servir como base para futuros experimentos em **assistentes móveis inteligentes**.  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🏗️ Estrutura do Projeto
+
+```
+flutter_app/
+│── assets/    
+|      │── models/        
+│           └── skin_cancer_model.tflite
+│── configs/             
+│── lib/       
+│   ├── core/            
+│   ├── features/        
+│   ├── services/        
+│   │    └── tflite/
+│   ├── main.dart        
+```
+
+---
+## 🛠️ Tecnologias Utilizadas
+
+- **Flutter** (Dart)  
+- **TensorFlow Lite** para execução da rede neural no celular  
+- **SLM otimizado** (flutter_gemma)  
+- **Arquitetura modular** em Flutter (core, features, services)  
+
+---
+
+## 📱 Como Executar
+
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/neural-llm-mobile.git
+   ```
+2. Acesse a pasta do projeto:
+   ```bash
+   cd flutter_app
+   ```
+3. Instale as dependências do Flutter:
+   ```bash
+   flutter pub get
+   ```
+4. Rode no emulador ou dispositivo real:
+   ```bash
+   flutter run
+   ```
+---
+
+## ⚡ Desafios
+
+- Quantização e otimização para rodar em CPU.  
+- Gerenciamento de memória em dispositivos móveis.  
+- Garantir **tempo de resposta aceitável** sem GPU.  
+- Manter execução totalmente **offline**.  
+
+---
+## 📜 Licença
+
+Distribuído sob a licença GPL-3.0  
+
+Em casos de forks ou alterações, dê os devidos créditos ao projeto inicial.
+
+Este projeto é apenas uma **prova de conceito experimental**.
