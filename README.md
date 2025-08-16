@@ -49,7 +49,7 @@ flutter_app/
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/neural-llm-mobile.git
+   git clone https://github.com/joaopedroangelo/Neural_SLM_Mobile.git
    ```
 2. Acesse a pasta do projeto:
    ```bash
