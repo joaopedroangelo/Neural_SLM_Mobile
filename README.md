@@ -1,6 +1,6 @@
-# 📱 Neural+SLM Mobile
+# 📱 Neural SLM Mobile
 
-**Neural+SLM Mobile** é uma prova de conceito que integra uma **Rede Neural** (via TensorFlow Lite) com um **Modelo de Linguagem (SLM)** dentro de um aplicativo Android construído em **Flutter**, funcionando **totalmente offline** em dispositivos **sem GPU**.
+**Neural SLM Mobile** é uma prova de conceito que integra uma **Rede Neural** (via TensorFlow Lite) com um **Modelo de Linguagem (SLM)** dentro de um aplicativo Android construído em **Flutter**, funcionando **totalmente offline** em dispositivos **sem GPU**.
 
 > SLM: Small Language Model
 
