@@ -4,6 +4,8 @@
 
 > SLM: Small Language Model
 
+> Veja uma demo em: [Youtube Shorts](https://www.youtube.com/shorts/TwHRZeDTlks)
+
 ---
 ## 🖼️ Imagens
 ![alt text](images/image.png)<br>
